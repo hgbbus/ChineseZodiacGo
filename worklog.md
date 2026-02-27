@@ -146,3 +146,23 @@ Now, add all files and make the first commit:
 % git add .
 % git commit -m "Initial commit with main.go and README.md"
 ```
+
+### Connect to GitHub and Push
+
+Add the remote `origin` pointing to your GitHub repository:
+```bash
+% git remote add origin https://github.com/hgbbus/ChineseZodiacGo.git
+```
+
+Then push the commit to GitHub:
+```bash
+# git branch -M main (not necessary if you already have a main branch)
+% git push -u origin main
+```
+
+Commit the worklog file changes and push again:
+```bash
+% git add worklog.md
+% git commit -m "Add connecting to github and push steps to worklog"
+% git push
+```

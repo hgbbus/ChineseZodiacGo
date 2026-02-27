@@ -166,3 +166,41 @@ Commit the worklog file changes and push again:
 % git commit -m "Add connecting to github and push steps to worklog"
 % git push
 ```
+
+### Add Test File
+
+Create a new file named `main_test.go` in the project folder with the following content:
+```go
+package main
+
+import "testing"
+
+func TestMain(t *testing.T) {
+    // This is a placeholder test. You can add actual tests later.
+}
+```
+
+Run the test(s):
+```bash
+% go test
+PASS
+ok      github.com/hgbbus/ChineseZodiacGo       0.230s
+```
+
+Or run with verbose output:
+```bash
+% go test -v
+=== RUN   TestMain
+    main_test.go:8: Starting main function test...
+    main_test.go:12: Main function executed successfully.
+--- PASS: TestMain (0.00s)
+PASS
+ok      github.com/hgbbus/ChineseZodiacGo       0.200s
+```
+
+Commit the test file and push:
+```bash
+% git add .
+% git commit -m "Add main_test.go with a placeholder test"
+% git push
+```

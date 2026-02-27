@@ -217,3 +217,79 @@ Now, commit the change and push again:
 % git commit -m "Change test package to main_test"
 % git push
 ```
+
+## Solution Implementation
+
+### Add a Menu-Driven Interface
+
+Add the following code to the main function in the `main.go` to create a simple menu-driven interface:
+```go
+...
+	for {
+		fmt.Println()
+		fmt.Println("Please select an option:")
+		fmt.Println()
+		fmt.Println(" 1. Generate and display the full 60-year cycle starting from a specified year.")
+		fmt.Println(" 2. Look up the zodiac information for a specific Gregorian year.")
+		fmt.Println(" 0. Exit")
+		fmt.Println()
+		fmt.Print("Enter your choice (1, 2, or 0): ")
+
+		var choice int
+		fmt.Scanln(&choice)
+		fmt.Println()
+
+		switch choice {
+		case 1:
+			fmt.Print("Enter the starting Gregorian year: ")
+			var startYear int
+			fmt.Scanln(&startYear)
+			// generateCycle(startYear)
+		case 2:
+			fmt.Print("Enter the Gregorian year to look up: ")
+			var year int
+			fmt.Scanln(&year)
+			// lookupYear(year)
+		case 0:
+			fmt.Println("Exiting the program.")
+			return
+		default:
+			fmt.Println("Invalid choice. Please enter 1, 2, or 0.")
+		}
+	}
+```
+
+Run it to see the menu and try entering different options:
+```bash
+% go run .
+Welcome to the Chinese Zodiac Program!
+
+Please select an option:
+
+ 1. Generate and display the full 60-year cycle starting from a specified year.
+ 2. Look up the zodiac information for a specific Gregorian year.
+ 0. Exit
+
+Enter your choice (1, 2, or 0): 
+
+...
+
+```
+
+Now, write the test code for the menu interface in `main_test.go`. Since the `main()` function is not exported, we cannot directly test it. We have two optins: (1) We change the package name back to the `main` package; (2) We write a helper function such as `Main()` that calls the `main()` function. We go with the second option.
+
+The details of the test code are in `main_test.go`. For brevity, we omit the code snippet here.
+
+Run the test code to ensure it works:
+```bash
+% go test .
+ok      github.com/hgbbus/ChineseZodiacGo       (cached)
+```
+
+Now, commit the changes and push:
+```bash
+% git add .
+% git commit -m "Add menu-driven interface and corresponding test code"
+% git push
+```
+

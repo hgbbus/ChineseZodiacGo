@@ -1,0 +1,11 @@
+# Binaries
+ChineseZodiacGo
+*.ext
+*.out
+
+# IDE files
+.vscode/
+.idea/
+
+# PDF files
+*.pdf

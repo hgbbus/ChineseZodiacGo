@@ -324,3 +324,42 @@ Now, commit the changes and push:
 % git commit -m "Implement Yin-Yang and Five Element logic with tests"
 % git push
 ```
+
+### Go Test Notes
+
+#### Run all tests:
+```bash
+% go test ./...
+```
+
+#### Run a specific test function:
+```bash
+% go test -run TestMain
+```
+
+#### Run with coverage:
+```bash
+% go test -cover
+```
+
+#### Generate a coverage report:
+```bash
+% go test -coverprofile=coverage.out
+% go tool cover -html=coverage.out
+```
+
+The `go tool cover -html=coverage.out` command will interpret the coverage profile (`coverage.out`) and open a web browser showing the coverage report in a visual format, highlighting which lines of code were covered by the tests and which were not.
+
+If needed, you can provide an option to specify the output file for the HTML report:
+```bash
+% go tool cover -html=coverage.out -o coverage.html
+```
+
+This will save the HTML report as `coverage.html` in the current directory, which you can then open with a web browser to view the coverage report.
+
+Commit the test notes to the worklog and push:
+```bash
+% git add worklog.md
+% git commit -m "Add Go test notes to worklog"
+% git push
+```

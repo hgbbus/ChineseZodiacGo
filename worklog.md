@@ -204,3 +204,16 @@ Commit the test file and push:
 % git commit -m "Add main_test.go with a placeholder test"
 % git push
 ```
+
+The common practice for the test code is to separate it from the main code, but for simplicity, we are putting it in the same package and folder for now. However, we still want to use a separate package name for the test file. Go allows us to do this by using the `_test` suffix in the package name. So, we can change the package declaration in `main_test.go` to:
+```go
+package main_test
+...
+```
+
+Now, commit the change and push again:
+```bash
+% git add .
+% git commit -m "Change test package to main_test"
+% git push
+```

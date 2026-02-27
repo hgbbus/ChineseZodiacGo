@@ -293,3 +293,34 @@ Now, commit the changes and push:
 % git push
 ```
 
+### Implement Yin-Yang and Five Element Logic
+
+Add the following code to implement the logic for determining the element and Yin/Yang based on the stem index:
+```go
+func getElement(stemIndex int) string {
+	elements := []string{"Wood", "Fire", "Earth", "Metal", "Water"}
+	return elements[stemIndex/2]
+}
+
+func getYinYang(stemIndex int) string {
+	if stemIndex%2 == 0 {
+		return "Yang"
+	}
+	return "Yin"
+}
+```
+
+Now, write test cases for these functions in `main_test.go`. Detailed code snippets are in the test file. Omited here for brevity.
+
+Run the tests to ensure they work:
+```bash
+% go test .    
+ok      github.com/hgbbus/ChineseZodiacGo       0.202s
+```
+
+Now, commit the changes and push:
+```bash
+% git add .
+% git commit -m "Implement Yin-Yang and Five Element logic with tests"
+% git push
+```

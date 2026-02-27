@@ -4,6 +4,18 @@ import (
 	"fmt"
 )
 
+func GetElement(stemIndex int) string {
+	elements := []string{"Wood", "Fire", "Earth", "Metal", "Water"}
+	return elements[stemIndex/2]
+}
+
+func GetYinYang(stemIndex int) string {
+	if stemIndex%2 == 0 {
+		return "Yang"
+	}
+	return "Yin"
+}
+
 func main() {
 	fmt.Println("Welcome to the Chinese Zodiac Program!")
 

@@ -1,18 +1,18 @@
-//
 // package main
 //
-// For the test file, either the package name can be `main` (same as the main program) or 
+// For the test file, either the package name can be `main` (same as the main program) or
 // `main_test` (a separate test package).
 //
-// Normally, you cannot have two packages in the same directory. However, for testing 
-// purposes, Go allows you to have a separate test package (e.g., `main_test`) in the same 
-// directory as the main package (`main`). This is a common practice to keep test code 
-// separate from production code. In this case, we will use `main_test` for our test file 
+// Normally, you cannot have two packages in the same directory. However, for testing
+// purposes, Go allows you to have a separate test package (e.g., `main_test`) in the same
+// directory as the main package (`main`). This is a common practice to keep test code
+// separate from production code. In this case, we will use `main_test` for our test file
 // to follow best practices.
 package main_test
 
 import (
 	"bytes"
+	"fmt"
 	"io"
 	"os"
 	"strings"
@@ -52,7 +52,7 @@ func TestMain(t *testing.T) {
 	// ---- Read captured output ----
 	var output bytes.Buffer
 	io.Copy(&output, outReader)
-	t.Log("Captured output:\n", output.String())
+	//t.Log("Captured output:\n", output.String())
 
 	// ---- Basic assertion to check if the output contains expected strings ----
 	if !strings.Contains(output.String(), "Welcome") {
@@ -72,4 +72,59 @@ func TestMain(t *testing.T) {
 	}
 
 	t.Log("Main function executed successfully.")
+}
+
+func TestGetElement(t *testing.T) {
+	tests := []struct {
+		stemIndex int
+		expected  string
+	}{
+		{0, "Wood"},
+		{1, "Wood"},
+		{2, "Fire"},
+		{3, "Fire"},
+		{4, "Earth"},
+		{5, "Earth"},
+		{6, "Metal"},
+		{7, "Metal"},
+		{8, "Water"},
+		{9, "Water"},
+	}
+
+	for _, test := range tests {
+		// Use t.Run to create subtests for better reporting
+		t.Run(fmt.Sprintf("stemIndex=%d", test.stemIndex), func(t *testing.T) {
+			result := main.GetElement(test.stemIndex)
+			if result != test.expected {
+				t.Errorf("GetElement(%d) = %s; expected %s", test.stemIndex, result, test.expected)
+			}
+		})
+	}
+}
+
+func TestGetYinYang(t *testing.T) {
+	tests := []struct {
+		stemIndex int
+		expected  string
+	}{
+		{0, "Yang"},
+		{1, "Yin"},
+		{2, "Yang"},
+		{3, "Yin"},
+		{4, "Yang"},
+		{5, "Yin"},
+		{6, "Yang"},
+		{7, "Yin"},
+		{8, "Yang"},
+		{9, "Yin"},
+	}
+
+	for _, test := range tests {
+		t.Run(fmt.Sprintf("stemIndex=%d", test.stemIndex), func(t *testing.T) {
+			result := main.GetYinYang(test.stemIndex)
+			if result != test.expected {
+				t.Errorf("GetYinYang(%d) = %s; expected %s", test.stemIndex, result, test.expected)
+			}
+		})
+	}
 }

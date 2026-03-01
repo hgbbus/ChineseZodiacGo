@@ -26,3 +26,9 @@ jobs:                               # Define the jobs to run (a workflow can con
 
       - name: Display coverage in console  # Step 4: Display the coverage report in the console
         run: go tool cover -func=coverage.out
+
+      - name: Upload coverage report  # Step 5: Upload the coverage report as an artifact (optional)
+        uses: actions/upload-artifact@v4  #     Use a pre-built GitHub action that uploads artifacts
+        with:
+          name: coverage-report           #     Name of the artifact
+          path: coverage.out              #     Path to the coverage report file generated in Step 3

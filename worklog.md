@@ -449,3 +449,28 @@ Now, commit the implementation, test code, and workflow file and push:
 % git commit -m "Implement getZodiacInfo function and set up GitHub Actions workflow"
 % git push
 ```
+
+That push was successful, and you should see the workflow running in the "Actions" tab of your GitHub repository. To see the details of the workflow run, click on the workflow name (e.g., "Test and Coverage"); then click on the specific run to see the logs and results of each step; then click on the specific job (e.g., "test") to see the logs from each step for that job, including the output of the tests and coverage report.
+
+However, there is a warning from `actions/setup-go` about not seeing a `go.sum` file, which is used for dependency management. Normally, to fix this warning, we can run the following command in the terminal:
+```bash
+% go mod tidy
+```
+
+But this doesn't generate a `go.sum` file because we don't have any external dependencies in our project. We will therefore have to ignore this warning for now.
+
+Lastly, to make GitHub show a nice coverage dashboard, we can add another step to the workflow to upload the coverage report to GitHub:
+```yaml
+      - name: Upload coverage report  # Step 5: Upload the coverage report as an artifact (optional)
+        uses: actions/upload-artifact@v4  #     Use a pre-built GitHub action that uploads artifacts
+        with:
+          name: coverage-report           #     Name of the artifact
+          path: coverage.out              #     Path to the coverage report file generated in Step 3
+```
+
+Now, commit the change and push again:
+```bash
+% git add .
+% git commit -m "Add step to upload coverage report to GitHub Actions workflow"
+% git push
+```

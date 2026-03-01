@@ -363,3 +363,89 @@ Commit the test notes to the worklog and push:
 % git commit -m "Add Go test notes to worklog"
 % git push
 ```
+
+### Implement the Lookup Function and GitHub Actions
+
+Add the following code to implement the `getZodiacInfo(year int)` function that calculates the zodiac information for a given year:
+```go
+
+var (
+	Stems = [...]string{"Jia", "Yi", "Bing", "Ding", "Wu", "Ji", "Geng", "Xin", "Ren", "Gui"}
+	Elements = [...]string{"Wood", "Fire", "Earth", "Metal", "Water"}
+	Branches = [...]string{"Zi", "Chou", "Yin", "Mao", "Chen", "Si", "Wu", "Wei", "Shen", "You", "Xu", "Hai"}
+	Animals = [...]string{"Rat", "Ox", "Tiger", "Rabbit", "Dragon", "Snake", "Horse", "Goat", "Monkey", "Rooster", "Dog", "Pig"}
+)
+
+func mod(a, b int) int {
+	return (a % b + b) % b
+}
+
+func getZodiacInfo(year int) (string, string, string, string, string) {
+	stemIndex := mod(year - 1984, 10)
+	branchIndex := mod(year - 1984, 12)
+	
+	stem := Stems[stemIndex]
+	branch := Branches[branchIndex]
+	element := GetElement(stemIndex)
+	yinYang := GetYinYang(stemIndex)
+	animal := Animals[branchIndex]
+
+	return stem, branch, element, yinYang, animal
+}
+```
+
+Now, write test cases for the `getZodiacInfo` function in `main_test.go`. Detailed code snippets are in the test file. Omited here for brevity.
+
+Run the tests to ensure they work:
+```bash
+% go test .
+ok      github.com/hgbbus/ChineseZodiacGo       0.230s
+```
+
+Now, we could commit the changes and push. However, let's try GitHub Actions to run the tests automatically on push. We will set up a simple workflow for this.
+
+#### Create GitHub Actions Workflow
+
+In the project folder, create a new directory named `.github/workflows`. Inside this directory, create a new file named `go.yml` with the following content:
+
+```yaml
+name: Test and Coverage             # Just a name for the workflow
+
+on:                                 # When to run the workflow
+  push:                             #   Run on push to main branch
+    branches: [ main ]
+  pull_request:                     #   Or run on pull request to main branch 
+    branches: [ main ]
+
+jobs:                               # Define the jobs to run (a workflow can contain multiple jobs)
+  test:                             # A job named "test" (just a name)
+    runs-on: ubuntu-latest          # Tells GitHub to run this job on the latest version of Ubuntu
+
+    steps:                          # Steps are the individual tasks that make up the job
+      - name: Checkout code         # Step 1: Check out the code from the repository
+        uses: actions/checkout@v5   #     Use a pre-built GitHub action that checks out your code to the runner
+                                    #     (v5 means major version 5 of the prebuilt action on GitHub)
+
+      - name: Set up Go             # Step 2: Set up the Go programming environment
+        uses: actions/setup-go@v5   #     Use a pre-built GitHub action that sets up Go on the runner
+                                    #     (v5 means major version 5 of the prebuilt action on GitHub)
+        with:
+          go-version: '1.25'        #     Specify the version of Go to use (1.20 in this case)
+
+      - name: Run tests with coverage  # Step 3: Run the tests and collect coverage information
+        run: go test ./... -coverprofile=coverage.out -covermode=atomic
+
+      - name: Display coverage in console  # Step 4: Display the coverage report in the console
+        run: go tool cover -func=coverage.out
+```
+
+This workflow will run on every push and pull request to the `main` branch. It checks out the code, sets up Go, builds the project, and runs the tests.
+
+#### Commit the Workflow and Push
+
+Now, commit the implementation, test code, and workflow file and push:
+```bash
+% git add .
+% git commit -m "Implement getZodiacInfo function and set up GitHub Actions workflow"
+% git push
+```

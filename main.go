@@ -4,9 +4,15 @@ import (
 	"fmt"
 )
 
+var (
+	Stems = [...]string{"Jia", "Yi", "Bing", "Ding", "Wu", "Ji", "Geng", "Xin", "Ren", "Gui"}
+	Elements = [...]string{"Wood", "Fire", "Earth", "Metal", "Water"}
+	Branches = [...]string{"Zi", "Chou", "Yin", "Mao", "Chen", "Si", "Wu", "Wei", "Shen", "You", "Xu", "Hai"}
+	Animals = [...]string{"Rat", "Ox", "Tiger", "Rabbit", "Dragon", "Snake", "Horse", "Goat", "Monkey", "Rooster", "Dog", "Pig"}
+)
+
 func GetElement(stemIndex int) string {
-	elements := []string{"Wood", "Fire", "Earth", "Metal", "Water"}
-	return elements[stemIndex/2]
+	return Elements[stemIndex/2]
 }
 
 func GetYinYang(stemIndex int) string {
@@ -14,6 +20,23 @@ func GetYinYang(stemIndex int) string {
 		return "Yang"
 	}
 	return "Yin"
+}
+
+func mod(a, b int) int {
+	return (a % b + b) % b
+}
+
+func GetZodiacInfo(year int) (string, string, string, string, string) {
+	stemIndex := mod(year - 1984, 10)
+	branchIndex := mod(year - 1984, 12)
+	
+	stem := Stems[stemIndex]
+	branch := Branches[branchIndex]
+	element := GetElement(stemIndex)
+	yinYang := GetYinYang(stemIndex)
+	animal := Animals[branchIndex]
+
+	return stem, branch, element, yinYang, animal
 }
 
 func main() {

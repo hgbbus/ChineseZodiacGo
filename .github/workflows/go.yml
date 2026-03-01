@@ -1,0 +1,28 @@
+name: Test and Coverage             # Just a name for the workflow
+
+on:                                 # When to run the workflow
+  push:                             #   Run on push to main branch
+    branches: [ main ]
+  pull_request:                     #   Or run on pull request to main branch 
+    branches: [ main ]
+
+jobs:                               # Define the jobs to run (a workflow can contain multiple jobs)
+  test:                             # A job named "test" (just a name)
+    runs-on: ubuntu-latest          # Tells GitHub to run this job on the latest version of Ubuntu
+
+    steps:                          # Steps are the individual tasks that make up the job
+      - name: Checkout code         # Step 1: Check out the code from the repository
+        uses: actions/checkout@v5   #     Use a pre-built GitHub action that checks out your code to the runner
+                                    #     (v5 means major version 5 of the prebuilt action on GitHub)
+
+      - name: Set up Go             # Step 2: Set up the Go programming environment
+        uses: actions/setup-go@v5   #     Use a pre-built GitHub action that sets up Go on the runner
+                                    #     (v5 means major version 5 of the prebuilt action on GitHub)
+        with:
+          go-version: '1.25'        #     Specify the version of Go to use (1.20 in this case)
+
+      - name: Run tests with coverage  # Step 3: Run the tests and collect coverage information
+        run: go test ./... -coverprofile=coverage.out -covermode=atomic
+
+      - name: Display coverage in console  # Step 4: Display the coverage report in the console
+        run: go tool cover -func=coverage.out

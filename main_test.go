@@ -207,3 +207,171 @@ func TestGetZodiacInfo(t *testing.T) {
 		})
 	}
 }
+
+func TestGenerateCycle(t *testing.T) {
+	// ---- Save original stdin and stdout ----
+	oldStdin := os.Stdin
+	oldStdout := os.Stdout
+
+	defer func() {
+		os.Stdin = oldStdin
+		os.Stdout = oldStdout
+	}()
+
+	// ---- Mock stdout to capture output ----
+	outReader, outWriter, _ := os.Pipe()
+	os.Stdout = outWriter
+
+	// ---- Run generateCycle with a specific start year ----
+	startYear := 1984
+	main.GenerateCycle(startYear)
+	outWriter.Close()	// close the writer to signal end of output
+
+	// ---- Read captured output ----
+	output, _ := io.ReadAll(outReader)	// not using bytes.Buffer here
+	expectedOutput := `
+1984 - Jia Zi - Yang Wood - Rat
+1985 - Yi Chou - Yin Wood - Ox
+1986 - Bing Yin - Yang Fire - Tiger
+1987 - Ding Mao - Yin Fire - Rabbit
+1988 - Wu Chen - Yang Earth - Dragon
+1989 - Ji Si - Yin Earth - Snake
+1990 - Geng Wu - Yang Metal - Horse
+1991 - Xin Wei - Yin Metal - Goat
+1992 - Ren Shen - Yang Water - Monkey
+1993 - Gui You - Yin Water - Rooster
+1994 - Jia Xu - Yang Wood - Dog
+1995 - Yi Hai - Yin Wood - Pig
+1996 - Bing Zi - Yang Fire - Rat
+1997 - Ding Chou - Yin Fire - Ox
+1998 - Wu Yin - Yang Earth - Tiger
+1999 - Ji Mao - Yin Earth - Rabbit
+2000 - Geng Chen - Yang Metal - Dragon
+2001 - Xin Si - Yin Metal - Snake
+2002 - Ren Wu - Yang Water - Horse
+2003 - Gui Wei - Yin Water - Goat
+2004 - Jia Shen - Yang Wood - Monkey
+2005 - Yi You - Yin Wood - Rooster
+2006 - Bing Xu - Yang Fire - Dog
+2007 - Ding Hai - Yin Fire - Pig
+2008 - Wu Zi - Yang Earth - Rat
+2009 - Ji Chou - Yin Earth - Ox
+2010 - Geng Yin - Yang Metal - Tiger
+2011 - Xin Mao - Yin Metal - Rabbit
+2012 - Ren Chen - Yang Water - Dragon
+2013 - Gui Si - Yin Water - Snake
+2014 - Jia Wu - Yang Wood - Horse
+2015 - Yi Wei - Yin Wood - Goat
+2016 - Bing Shen - Yang Fire - Monkey
+2017 - Ding You - Yin Fire - Rooster
+2018 - Wu Xu - Yang Earth - Dog
+2019 - Ji Hai - Yin Earth - Pig
+2020 - Geng Zi - Yang Metal - Rat
+2021 - Xin Chou - Yin Metal - Ox
+2022 - Ren Yin - Yang Water - Tiger
+2023 - Gui Mao - Yin Water - Rabbit
+2024 - Jia Chen - Yang Wood - Dragon
+2025 - Yi Si - Yin Wood - Snake
+2026 - Bing Wu - Yang Fire - Horse
+2027 - Ding Wei - Yin Fire - Goat
+2028 - Wu Shen - Yang Earth - Monkey
+2029 - Ji You - Yin Earth - Rooster
+2030 - Geng Xu - Yang Metal - Dog
+2031 - Xin Hai - Yin Metal - Pig
+2032 - Ren Zi - Yang Water - Rat
+2033 - Gui Chou - Yin Water - Ox
+2034 - Jia Yin - Yang Wood - Tiger
+2035 - Yi Mao - Yin Wood - Rabbit
+2036 - Bing Chen - Yang Fire - Dragon
+2037 - Ding Si - Yin Fire - Snake
+2038 - Wu Wu - Yang Earth - Horse
+2039 - Ji Wei - Yin Earth - Goat
+2040 - Geng Shen - Yang Metal - Monkey
+2041 - Xin You - Yin Metal - Rooster
+2042 - Ren Xu - Yang Water - Dog
+2043 - Gui Hai - Yin Water - Pig
+`
+	if string(output) != expectedOutput {
+		t.Errorf("GenerateCycle(%d) output = %q; expected %q", startYear, string(output), expectedOutput)
+	}
+
+	// Can we try another start year? (optional)
+
+	// ---- Mock stdout to capture output ----
+	outReader2, outWriter2, _ := os.Pipe()
+	os.Stdout = outWriter2
+
+	// ---- Run generateCycle with a specific start year ----
+	startYear2 := 2020
+	main.GenerateCycle(startYear2)
+	outWriter2.Close()	// close the writer to signal end of output
+
+	// ---- Read captured output ----
+	output2, _ := io.ReadAll(outReader2)	// not using bytes.Buffer here
+	expectedOutput2 := `
+2020 - Geng Zi - Yang Metal - Rat
+2021 - Xin Chou - Yin Metal - Ox
+2022 - Ren Yin - Yang Water - Tiger
+2023 - Gui Mao - Yin Water - Rabbit
+2024 - Jia Chen - Yang Wood - Dragon
+2025 - Yi Si - Yin Wood - Snake
+2026 - Bing Wu - Yang Fire - Horse
+2027 - Ding Wei - Yin Fire - Goat
+2028 - Wu Shen - Yang Earth - Monkey
+2029 - Ji You - Yin Earth - Rooster
+2030 - Geng Xu - Yang Metal - Dog
+2031 - Xin Hai - Yin Metal - Pig
+2032 - Ren Zi - Yang Water - Rat
+2033 - Gui Chou - Yin Water - Ox
+2034 - Jia Yin - Yang Wood - Tiger
+2035 - Yi Mao - Yin Wood - Rabbit
+2036 - Bing Chen - Yang Fire - Dragon
+2037 - Ding Si - Yin Fire - Snake
+2038 - Wu Wu - Yang Earth - Horse
+2039 - Ji Wei - Yin Earth - Goat
+2040 - Geng Shen - Yang Metal - Monkey
+2041 - Xin You - Yin Metal - Rooster
+2042 - Ren Xu - Yang Water - Dog
+2043 - Gui Hai - Yin Water - Pig
+2044 - Jia Zi - Yang Wood - Rat
+2045 - Yi Chou - Yin Wood - Ox
+2046 - Bing Yin - Yang Fire - Tiger
+2047 - Ding Mao - Yin Fire - Rabbit
+2048 - Wu Chen - Yang Earth - Dragon
+2049 - Ji Si - Yin Earth - Snake
+2050 - Geng Wu - Yang Metal - Horse
+2051 - Xin Wei - Yin Metal - Goat
+2052 - Ren Shen - Yang Water - Monkey
+2053 - Gui You - Yin Water - Rooster
+2054 - Jia Xu - Yang Wood - Dog
+2055 - Yi Hai - Yin Wood - Pig
+2056 - Bing Zi - Yang Fire - Rat
+2057 - Ding Chou - Yin Fire - Ox
+2058 - Wu Yin - Yang Earth - Tiger
+2059 - Ji Mao - Yin Earth - Rabbit
+2060 - Geng Chen - Yang Metal - Dragon
+2061 - Xin Si - Yin Metal - Snake
+2062 - Ren Wu - Yang Water - Horse
+2063 - Gui Wei - Yin Water - Goat
+2064 - Jia Shen - Yang Wood - Monkey
+2065 - Yi You - Yin Wood - Rooster
+2066 - Bing Xu - Yang Fire - Dog
+2067 - Ding Hai - Yin Fire - Pig
+2068 - Wu Zi - Yang Earth - Rat
+2069 - Ji Chou - Yin Earth - Ox
+2070 - Geng Yin - Yang Metal - Tiger
+2071 - Xin Mao - Yin Metal - Rabbit
+2072 - Ren Chen - Yang Water - Dragon
+2073 - Gui Si - Yin Water - Snake
+2074 - Jia Wu - Yang Wood - Horse
+2075 - Yi Wei - Yin Wood - Goat
+2076 - Bing Shen - Yang Fire - Monkey
+2077 - Ding You - Yin Fire - Rooster
+2078 - Wu Xu - Yang Earth - Dog
+2079 - Ji Hai - Yin Earth - Pig
+`
+	if string(output2) != expectedOutput2 {
+		t.Errorf("GenerateCycle(%d) output = %q; expected %q", startYear2, string(output2), expectedOutput2)
+	}
+ 
+}

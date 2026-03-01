@@ -39,6 +39,38 @@ func GetZodiacInfo(year int) (string, string, string, string, string) {
 	return stem, branch, element, yinYang, animal
 }
 
+func GenerateCycle(startYear int) {
+	// One solution using existing GetZodiacInfo function
+	//for i := range 60 {
+	//	year := startYear + i
+	//	stem, branch, element, yinYang, animal := GetZodiacInfo(year)
+	//	fmt.Printf("%d - %s %s - %s %s - %s\n", year, stem, branch, yinYang, element, animal)
+	//}
+
+	// Another solution using direct calculations
+	year := startYear
+	stemIndex := mod(year - 1984, 10)
+	branchIndex := mod(year - 1984, 12)
+	fmt.Println()
+	for {
+		stem := Stems[stemIndex]
+		branch := Branches[branchIndex]
+		element := GetElement(stemIndex)
+		yinYang := GetYinYang(stemIndex)
+		animal := Animals[branchIndex]
+
+		fmt.Printf("%d - %s %s - %s %s - %s\n", year, stem, branch, yinYang, element, animal)
+
+		year++
+		stemIndex = (stemIndex + 1) % 10
+		branchIndex = (branchIndex + 1) % 12
+
+		if year == startYear + 60 {
+			break
+		}
+	}
+}
+
 func main() {
 	fmt.Println("Welcome to the Chinese Zodiac Program!")
 
@@ -61,7 +93,7 @@ func main() {
 			fmt.Print("Enter the starting Gregorian year: ")
 			var startYear int
 			fmt.Scanln(&startYear)
-			// generateCycle(startYear)
+			GenerateCycle(startYear)
 		case 2:
 			fmt.Print("Enter the Gregorian year to look up: ")
 			var year int

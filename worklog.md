@@ -503,3 +503,65 @@ Now, commit the changes and push:
 
 This should trigger another run of the GitHub Actions workflow, which will run the tests and show the results in the "Actions" tab of your GitHub repository.
 
+### Compltete the Cycle Generation Function and Menu Option
+
+Add the following code to complete the cycle generation function and menu option:
+```go
+func generateCycle(startYear int) {
+	// One solution using existing GetZodiacInfo function
+	//for i := range 60 {
+	//	year := startYear + i
+	//	stem, branch, element, yinYang, animal := GetZodiacInfo(year)
+	//	fmt.Printf("%d - %s %s - %s %s - %s\n", year, stem, branch, yinYang, element, animal)
+	//}
+
+	// Another solution using direct calculations
+	year := startYear
+	stemIndex := mod(year - 1984, 10)
+	branchIndex := mod(year - 1984, 12)
+	fmt.Println()
+	for {
+		stem := Stems[stemIndex]
+		branch := Branches[branchIndex]
+		element := GetElement(stemIndex)
+		yinYang := GetYinYang(stemIndex)
+		animal := Animals[branchIndex]
+
+		fmt.Printf("%d - %s %s - %s %s - %s\n", year, stem, branch, yinYang, element, animal)
+
+		year++
+		stemIndex = (stemIndex + 1) % 10
+		branchIndex = (branchIndex + 1) % 12
+
+		if year == startYear + 60 {
+			break
+		}
+	}
+}
+```
+
+Change the menu option `1` to call the `generateCycle` function:
+```go
+        case 1:
+            fmt.Print("Enter the starting Gregorian year: ")
+            var startYear int
+            fmt.Scanln(&startYear)
+            generateCycle(startYear)
+```
+
+Test the menu option `1` to ensure it works correctly. Details of the test are omitted here for brevity.
+
+Now, write test cases for the `generateCycle` function in `main_test.go`. Since this function prints output to the console, we can capture the output and verify it against expected results. Detailed code snippets are in the test file. Omited here for brevity.
+
+Run the tests to ensure they work:
+```bash
+% go test . 
+ok      github.com/hgbbus/ChineseZodiacGo       0.343s
+```
+
+Finally, commit the changes and push:
+```bash
+% git add .
+% git commit -m "Complete the cycle generation function and menu option"
+% git push
+```

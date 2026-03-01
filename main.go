@@ -66,7 +66,9 @@ func main() {
 			fmt.Print("Enter the Gregorian year to look up: ")
 			var year int
 			fmt.Scanln(&year)
-			// lookupYear(year)
+			stem, branch, element, yinYang, animal := GetZodiacInfo(year)
+			fmt.Println()
+			fmt.Printf("%d -> %s %s (%s %s %s)\n", year, stem, branch, yinYang, element, animal)
 		case 0:
 			fmt.Println("Exiting the program.")
 			return

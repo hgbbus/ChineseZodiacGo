@@ -474,3 +474,32 @@ Now, commit the change and push again:
 % git commit -m "Add step to upload coverage report to GitHub Actions workflow"
 % git push
 ```
+
+That upload step works, and you can see the uploaded artifact in the "Artifacts" section of the workflow run details. You can download the `coverage.out` file and use it to generate a local coverage report if needed.
+
+A better solution for the coverage report is to use a service like Codecov or Coveralls, which can integrate with GitHub and provide a nice dashboard for coverage reports. I am not doing that for now.
+
+### Complete the Lookup Functionality in the Menu
+
+Add the following code to complete the lookup functionality in the menu:
+```go
+		case 2:
+			fmt.Print("Enter the Gregorian year to look up: ")
+			var year int
+			fmt.Scanln(&year)
+			stem, branch, element, yinYang, animal := GetZodiacInfo(year)
+			fmt.Println()
+			fmt.Printf("%d -> %s %s (%s %s %s)\n", year, stem, branch, yinYang, element, animal)
+```
+
+Test the menu option `2` to ensure it works correctly. Details of the test are omitted here for brevity.
+
+Now, commit the changes and push:
+```bash
+% git add .
+% git commit -m "Complete the lookup functionality in the menu"
+% git push
+```
+
+This should trigger another run of the GitHub Actions workflow, which will run the tests and show the results in the "Actions" tab of your GitHub repository.
+

@@ -75,7 +75,7 @@ Example starting point:
 
 The following digram visualizes the cycle:
 <figure>
-  <img src="https://www.thechinastory.org/content/uploads/2021/03/Stems-branches-diagram.jpg" alt="60-Year Cycle Diagram" width="600">
+  <img src="https://www.thechinastory.org/content/uploads/2021/03/Stems-branches-diagram.jpg" alt="60-Year Cycle Diagram" width="600" height="500">
   <figcaption>Figure 1: 60-Year Cycle Formed by Pairing Heavenly Stems and Earthly Branches</figcaption>
 </figure>
 

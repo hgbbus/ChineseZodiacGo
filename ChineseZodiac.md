@@ -75,7 +75,7 @@ Example starting point:
 
 The following digram visualizes the cycle:
 <figure>
-  <img src="Stems-branches-diagram.jpg" alt="60-Year Cycle Diagram" width="600">
+  <img src="Stems-branches-diagram.jpg" alt="60-Year Cycle Diagram" width="700">
   <figcaption>Figure 1: 60-Year Cycle Formed by Pairing Heavenly Stems and Earthly Branches</figcaption>
 </figure>
 
